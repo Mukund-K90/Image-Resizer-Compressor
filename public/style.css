@@ -1,8 +1,26 @@
+#maxSizeInput {
+    -moz-appearance: textfield;
+    /* Firefox */
+    -webkit-appearance: none;
+    /* Chrome, Safari, Edge */
+    appearance: none;
+    /* Standard */
+}
+
+#maxSizeInput::-webkit-inner-spin-button,
+#maxSizeInput::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    /* Chrome, Safari, Edge */
+}
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+
 
 body {
     font-family: Arial, sans-serif;
@@ -15,12 +33,27 @@ h1 {
     margin-top: 20px;
 }
 
-.container {
+.main-container {
+    display: flex;
+    gap: .5rem;
+}
+
+.layoutContainer {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
 }
+
+.container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
 
 .upload-container {
     margin: 20px auto;
@@ -62,6 +95,7 @@ h1 {
     text-align: left;
     position: relative;
     font-size: 1.25rem;
+    display: none;
 }
 
 .file-info-box .progress-bar {
@@ -100,7 +134,7 @@ h1 {
     position: absolute;
     top: 15px;
     right: 10px;
-    /* display: none; */
+    display: none;
 }
 
 .delete-btn:hover {
@@ -130,12 +164,11 @@ h1 {
 .options-container {
     border-radius: 5px;
     border: 2px solid #416788;
-    width: 70%;
     display: flex;
-    margin-top: 20px;
     justify-content: start;
     justify-content: space-between;
     height: 70px;
+    width: 60%;
 }
 
 .left-options {
@@ -145,7 +178,6 @@ h1 {
     flex-direction: column;
     gap: 10px;
     align-items: start;
-    border-right: 1px solid #47494F;
     justify-content: center;
 }
 
@@ -165,7 +197,6 @@ h1 {
     width: 100%;
     padding: 5px;
     font-size: 20px;
-    /* height: 50px; */
 }
 
 .range-box input[type="range"] {
@@ -176,4 +207,38 @@ h1 {
     margin-top: 5px;
     font-size: 14px;
     text-align: center;
+}
+
+.image-preview-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.image-preview-container img {
+    width: 70%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.image-size-info {
+    margin: 10px 0;
+}
+
+.image-size-info p {
+    margin: 5px 0;
+}
+
+.resize-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.resize-btn:hover {
+    background-color: #45a049;
 }
