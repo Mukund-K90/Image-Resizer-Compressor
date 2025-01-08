@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer/Compressor</title>
+    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Image Resizer/Compressor</h1>
+
+        <div class="upload-container" id="uploadContainer">
+            <i class="fa-regular fa-image"></i>
+            <button class="upload-btn" id="uploadBtn">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>Select Images</p>
+            </button>
+            <p>or,drag and drop images here</p>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div class="file-info-box" id="fileInfoBox" style="display: '';">
+            <div class="progress-bar" id="progressBar"></div>
+            <button class="delete-btn" id="deleteBtn"><i class="fa-solid fa-trash"></i></button>
+            <div class="file-info">
+                <i class="fa-regular fa-image"></i>
+                <div class="file-details">
+                    <p id="fileName">Image Name</p>
+                    <p id="fileSize">Size: 0 KB</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="options-container" id="optionsContainer">
+            <div class="left-options">
+                <label>
+                    <input type="radio" name="resizeOption" value="maxSize" id="maxSizeOption" checked>
+                    Max Size in KB
+                </label>
+                <label>
+                    <input type="radio" name="resizeOption" value="quality" id="qualityOption">
+                    Quality
+                </label>
+            </div>
+            <div class="right-options">
+                <div class="input-box" id="inputBox">
+                    <input type="number" id="maxSizeInput" placeholder="Enter size in KB">
+                </div>
+                <div class="range-box" id="rangeBox" style="display: none;">
+                    <input type="range" id="qualityRange" min="0" max="100" value="40">
+                    <div class="range-value" id="rangeValue">Quality: 40%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/public/code.js">
+
+    </script>
+</body>
+
+</html>
