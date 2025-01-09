@@ -82,7 +82,6 @@
         displayResult(result);
     });
 
-    // Functions
     function uploadImage(file) {
         fileInfoBox.style.display = 'block';
         fileName.textContent = file.name;
