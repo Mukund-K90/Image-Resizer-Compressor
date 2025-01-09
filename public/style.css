@@ -29,6 +29,9 @@ h1 {
     margin-top: 20px;
 }
 
+.fa-circle-question{
+    cursor: pointer;
+}
 .main-container {
     display: flex;
     gap: .5rem;
@@ -156,7 +159,8 @@ h1 {
     font-size: large;
     cursor: pointer;
 }
-.upload-btn:hover{
+
+.upload-btn:hover {
     background: #47494F;
 }
 
@@ -167,7 +171,7 @@ h1 {
     justify-content: start;
     justify-content: space-between;
     height: 70px;
-    width: 80%;
+    width: 75%;
 }
 
 .left-options {
@@ -215,10 +219,8 @@ h1 {
 
 .image-preview-container img {
     margin-top: 1rem;
-    width: 50%;
-    height: auto;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    width: auto;
+    height: 350px;
     margin-bottom: 10px;
 }
 
@@ -230,32 +232,41 @@ h1 {
     margin: 5px 0;
 }
 
+.btns {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
 .resize-btn {
-    padding: 10px 20px;
     background-color: #416788;
     color: white;
+}
+
+.download-btn {
+    background-color: #45a049;
+    color: white;
+}
+
+.resize-btn,
+.download-btn {
+    display: none;
+    cursor: pointer;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
+    height: 50px;
+    width: auto;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    text-decoration: none;
+    padding: 1rem;
 }
 
 .resize-btn:hover {
     background-color: #20507a;
-}
-
-.download-btn {
-    margin-top: 1rem;
-    background-color: #45a049;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    height: 60px;
-    width: 40%;
-    font-size: 20px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    gap: .5rem;
 }
 
 .download-btn:hover {

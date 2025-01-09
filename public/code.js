@@ -109,6 +109,7 @@
         reader.onload = (e) => {
             imagePreview.src = e.target.result;
             imagePreviewContainer.style.display = 'block';
+            resizeBtn.style.display = 'block';
         };
         reader.readAsDataURL(file);
     }
@@ -130,6 +131,7 @@
 
         imagePreview.src = '';
         imagePreviewContainer.style.display = 'none';
+        resizeBtn.style.display = 'none';
         downloadBtn.style.display = 'none';
 
         inputBox.style.display = 'block';
