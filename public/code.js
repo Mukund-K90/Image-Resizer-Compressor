@@ -1,5 +1,4 @@
 (function () {
-
     const uploadContainer = document.getElementById('uploadContainer');
     const fileInput = document.getElementById('fileInput');
     const progressBar = document.getElementById('progressBar');
@@ -8,22 +7,23 @@
     const fileSize = document.getElementById('fileSize');
     const deleteBtn = document.getElementById('deleteBtn');
     const uploadBtn = document.getElementById('uploadBtn');
-
     const maxSizeOption = document.getElementById('maxSizeOption');
     const qualityOption = document.getElementById('qualityOption');
     const inputBox = document.getElementById('inputBox');
     const rangeBox = document.getElementById('rangeBox');
+    const maxSizeInput = document.getElementById('maxSizeInput');
     const qualityRange = document.getElementById('qualityRange');
     const rangeValue = document.getElementById('rangeValue');
-
     const imagePreviewContainer = document.getElementById('imagePreviewContainer');
     const imagePreview = document.getElementById('imagePreview');
     const originalSize = document.getElementById('originalSize');
     const currentSize = document.getElementById('currentSize');
     const resizeBtn = document.getElementById('resizeBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
 
     let uploadedImage = null;
 
+    // Event Listeners
     uploadContainer.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadContainer.classList.add('dragover');
@@ -51,6 +51,38 @@
         }
     });
 
+    deleteBtn.addEventListener('click', () => {
+        resetUI();
+    });
+
+    maxSizeOption.addEventListener('change', () => toggleInputVisibility());
+    qualityOption.addEventListener('change', () => toggleInputVisibility());
+
+    qualityRange.addEventListener('input', () => {
+        rangeValue.textContent = `Quality: ${qualityRange.value}%`;
+    });
+
+    resizeBtn.addEventListener('click', async () => {
+        if (!uploadedImage) return;
+
+        let result;
+
+        const qualityValue = qualityRange.value / 100;
+        const maxSizeKB = maxSizeInput.value ? parseInt(maxSizeInput.value, 10) : null;
+
+        if (maxSizeOption.checked && maxSizeKB) {
+            result = await resizeAndCompressImage(uploadedImage, { maxSizeKB, quality: 1 });
+        } else if (qualityOption.checked) {
+            result = await resizeAndCompressImage(uploadedImage, { maxSizeKB: null, quality: qualityValue });
+        } else {
+            alert('Please select an option to resize/compress the image.');
+            return;
+        }
+
+        displayResult(result);
+    });
+
+    // Functions
     function uploadImage(file) {
         fileInfoBox.style.display = 'block';
         fileName.textContent = file.name;
@@ -83,93 +115,111 @@
     }
 
     function formatFileSize(size) {
-        if (size >= 1048576) {
-            return `${(size / 1048576).toFixed(2)} MB`;
-        } else {
-            return `${(size / 1024).toFixed(2)} KB`;
-        }
+        return size >= 1048576 ? `${(size / 1048576).toFixed(2)} MB` : `${(size / 1024).toFixed(2)} KB`;
     }
 
-    deleteBtn.addEventListener('click', () => {
+    function resetUI() {
         fileInfoBox.style.display = 'none';
         progressBar.style.width = '0';
         fileName.textContent = '';
         fileSize.textContent = '';
         fileInput.value = '';
 
-        uploadedImage = '';
+        uploadedImage = null;
         originalSize.textContent = '';
         currentSize.textContent = '';
+
         imagePreview.src = '';
         imagePreviewContainer.style.display = 'none';
-    });
+        downloadBtn.style.display = 'none';
 
-
-
-    document.addEventListener('DOMContentLoaded', () => {
         inputBox.style.display = 'block';
         rangeBox.style.display = 'none';
-    });
+        qualityRange.value = 40;
+        rangeValue.textContent = 'Quality: 40%';
+        maxSizeInput.value = '';
+    }
 
-    maxSizeOption.addEventListener('change', () => {
-        inputBox.style.display = 'block';
-        rangeBox.style.display = 'none';
-    });
-
-    qualityOption.addEventListener('change', () => {
-        rangeBox.style.display = 'block';
-        inputBox.style.display = 'none';
-    });
-
-    qualityRange.addEventListener('input', () => {
-        rangeValue.textContent = `Quality: ${qualityRange.value}%`;
-    });
-
-    function formatFileSize(size) {
-        if (size >= 1048576) {
-            return `${(size / 1048576).toFixed(2)} MB`;
-        } else {
-            return `${(size / 1024).toFixed(2)} KB`;
+    function toggleInputVisibility() {
+        if (maxSizeOption.checked) {
+            inputBox.style.display = 'block';
+            rangeBox.style.display = 'none';
+        } else if (qualityOption.checked) {
+            inputBox.style.display = 'none';
+            rangeBox.style.display = 'block';
         }
     }
 
-    resizeBtn.addEventListener('click', () => {
-        const selectedOption = document.querySelector('input[name="resizeOption"]:checked').value;
+    function displayResult(result) {
+        imagePreview.src = URL.createObjectURL(result);
+        currentSize.textContent = formatFileSize(result.size);
 
-        if (uploadedImage) {
-            const canvas = document.createElement('canvas');
+        downloadBtn.style.display = 'flex';
+        downloadBtn.href = URL.createObjectURL(result);
+        downloadBtn.download = 'resized-image.jpg';
+    }
+
+    async function resizeAndCompressImage(file, options) {
+        const { maxSizeKB, quality = 1 } = options;
+
+        return new Promise((resolve, reject) => {
             const img = new Image();
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                img.src = e.target.result;
+            };
+
             img.onload = () => {
+                const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
+
+                let currentQuality = quality;
                 let width = img.width;
                 let height = img.height;
 
-                if (selectedOption === 'maxSize') {
-                    const maxSizeKB = document.getElementById('maxSizeInput').value;
-                    const targetSizeBytes = maxSizeKB * 1024;
-                    const scale = Math.sqrt(targetSizeBytes / uploadedImage.size);
-                    width *= scale;
-                    height *= scale;
-                } else if (selectedOption === 'quality') {
-                    const quality = document.getElementById('qualityRange').value / 100;
-                    width *= quality;
-                    height *= quality;
-                }
+                const compressImage = () => {
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, width, height);
 
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
+                    return new Promise((resolve) => {
+                        canvas.toBlob(
+                            (blob) => resolve(blob),
+                            'image/jpeg',
+                            currentQuality
+                        );
+                    });
+                };
 
-                canvas.toBlob((blob) => {
-                    currentSize.textContent = formatFileSize(blob.size);
-                    const resizedImageURL = URL.createObjectURL(blob);
-                    imagePreview.src = resizedImageURL;
-                }, 'image/jpeg');
+                const adjustImage = async () => {
+                    let blob = await compressImage();
+
+                    if (maxSizeKB) {
+                        while (blob.size > maxSizeKB * 1024) {
+                            if (currentQuality > 0.1) {
+                                currentQuality -= 0.1;
+                            } else if (width > 200 && height > 200) {
+                                width = Math.floor(width * 0.9);
+                                height = Math.floor(height * 0.9);
+                            } else {
+                                alert('Unable to resize image further. Minimum size reached.');
+                                return resolve(blob);
+                            }
+
+                            blob = await compressImage();
+                        }
+                    }
+
+                    resolve(blob);
+                };
+
+                adjustImage();
             };
 
-            img.src = URL.createObjectURL(uploadedImage);
-        }
-    });
-
-
+            reader.onerror = (err) => reject(err);
+            reader.readAsDataURL(file);
+        });
+    }
 })();

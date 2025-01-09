@@ -1,16 +1,12 @@
 #maxSizeInput {
     -moz-appearance: textfield;
-    /* Firefox */
     -webkit-appearance: none;
-    /* Chrome, Safari, Edge */
     appearance: none;
-    /* Standard */
 }
 
 #maxSizeInput::-webkit-inner-spin-button,
 #maxSizeInput::-webkit-outer-spin-button {
     -webkit-appearance: none;
-    /* Chrome, Safari, Edge */
 }
 
 
@@ -85,15 +81,15 @@ h1 {
 }
 
 .file-info-box {
-    width: 100%;
+    width: 50%;
     height: 60px;
     margin-top: 20px;
     border: 2px solid #ddd;
     border-radius: 5px;
     padding: 10px;
-    max-width: 300px;
     text-align: left;
     position: relative;
+    max-width: 70%;
     font-size: 1.25rem;
     display: none;
 }
@@ -215,7 +211,8 @@ h1 {
 }
 
 .image-preview-container img {
-    width: 70%;
+    margin-top: 1rem;
+    width: 50%;
     height: auto;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -232,7 +229,7 @@ h1 {
 
 .resize-btn {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #416788;
     color: white;
     border: none;
     border-radius: 5px;
@@ -240,5 +237,24 @@ h1 {
 }
 
 .resize-btn:hover {
+    background-color: #20507a;
+}
+
+.download-btn {
+    margin-top: 1rem;
     background-color: #45a049;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 60px;
+    width: 40%;
+    font-size: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.download-btn:hover {
+    background-color: #27852a;
 }
