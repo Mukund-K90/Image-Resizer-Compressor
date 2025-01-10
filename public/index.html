@@ -27,7 +27,7 @@
                 <input type="file" id="fileInput" accept="image/*">
             </div>
 
-            <!-- =====options box===== -->
+            <!-- =====Compression options box===== -->
             <h3>Compression Settings</h3>
             <div class="options-container" id="optionsContainer">
                 <div class="left-options">
@@ -47,14 +47,26 @@
                         <input type="number" id="maxSizeInput" placeholder="Enter size in KB" title="Enter Max KB">
                     </div>
                     <div class="range-box" id="rangeBox" style="display: none;">
-                        <input type="range" id="qualityRange" min="0" max="100" value="40">
-                        <div class="range-value" id="rangeValue">Quality: 40%</div>
+                        <input type="range" id="qualityRange" min="0" max="100" value="50">
+                        <div class="range-value" id="rangeValue">Quality: 50%</div>
                     </div>
                 </div>
             </div>
-
+            <br>
+            <!-- =====Resize options box===== -->
+            <h3>Resize Settings (px)</h3>
+            <div class="resize-container" id="resizeOptionsContainer">
+                <label>
+                    Width:
+                    <input type="number" id="resizeWidth" placeholder="Width">
+                </label>
+                <label>
+                    Height:
+                    <input type="number" id="resizeHeight" placeholder="Height">
+                </label>
+            </div>
             <!-- =====file info box===== -->
-            <div class="file-info-box" id="fileInfoBox" style="display: '';">
+            <div class="file-info-box" id="fileInfoBox">
                 <div class="progress-bar" id="progressBar"></div>
                 <button class="delete-btn" id="deleteBtn"><i class="fa-solid fa-trash"></i></button>
                 <div class="file-info">
