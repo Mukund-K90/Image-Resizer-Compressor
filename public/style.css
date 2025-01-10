@@ -186,7 +186,7 @@ h1 {
     align-items: center;
 }
 
-.resize-container input{
+.resize-container input {
     width: 70%;
     font-size: 15px;
 }
@@ -253,8 +253,9 @@ h1 {
 .btns {
     display: flex;
     gap: 1rem;
-    margin-top: 2rem;
     width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .resize-btn {
