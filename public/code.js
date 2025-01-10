@@ -125,7 +125,9 @@
         fileSize.textContent = '';
         fileInput.value = '';
         uploadedImage = null;
+        uploadedFileName = null;
         originalSize.textContent = '';
+        originalImageSize.textContent = '';
         currentSize.textContent = '';
         imagePreview.src = '';
         imagePreviewContainer.style.display = 'none';
@@ -258,6 +260,7 @@
     }
 
     function displayResult(result, type) {
+
         if (type === 'compress') {
             imagePreview.src = URL.createObjectURL(result);
         }
@@ -265,6 +268,6 @@
         currentSize.textContent = formatFileSize(result.size);
         downloadBtn.style.display = 'flex';
         downloadBtn.href = URL.createObjectURL(result);
-        downloadBtn.download = `${uploadedFileName}-compressed`;
+        downloadBtn.download = `${uploadedFileName}-${type}`;
     }
 })();
